@@ -36,8 +36,9 @@ Body:
       "username": <string>,
       "password": <string>,
       "full_name": <string>,
-      "email": <string>
     }
+
+The "username" parameter must be an email address, URL-encoded.
 
 Response:
 

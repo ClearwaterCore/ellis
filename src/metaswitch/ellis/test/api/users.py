@@ -58,7 +58,7 @@ FULL_NAME = "Alice"
 USER_ID = uuid.UUID('90babc2a-d376-494d-a94a-2b1aca07130b')
 DEFAULT_ARGUMENTS = { "password": PASSWORD,
                       "full_name": FULL_NAME,
-                      "email": EMAIL }
+                      "username": EMAIL }
 TOKEN = "TestToken125"
 NUMBER_ID = uuid.UUID('c9b15e68-5e8b-4bcf-9523-3eda4e677afd')
 SIP_URI = "sip:5555550123@ngv.metaswitch.com"

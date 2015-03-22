@@ -82,7 +82,8 @@ class AccountsHandler(_base.BaseHandler):
         try:
             user = users.create_user(db_sess,
                                      data["password"],
-                                     data["full_name"], data["email"],
+                                     data["full_name"],
+                                     data["username"],
                                      int(data["expires"]) if "expires" in data else None)
         except AlreadyExists:
             raise HTTPError(httplib.CONFLICT, "Email already exists")
@@ -93,7 +94,7 @@ class AccountsHandler(_base.BaseHandler):
     post.validation = {
             "password": (REQUIRED, STRING, _PASSWORD_REGEXP),
             "full_name": (REQUIRED, STRING, r'.*'),
-            "email": (REQUIRED, STRING, r'[\w.]+@[\w.]+\w'),
+            "username": (REQUIRED, STRING, r'[\w.]+@[\w.]+\w'),
             "expires": (OPTIONAL, STRING, r'[0-9]+'),
         }
 

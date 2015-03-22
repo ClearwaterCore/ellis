@@ -96,7 +96,6 @@ var clearwater = (function(mod, $){
   }
 
   $("#signup-form").submit(function(evt) {
-    $("#email-field").val($("#username-field").val());
     return true;
   });
 
