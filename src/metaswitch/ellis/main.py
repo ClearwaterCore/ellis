@@ -38,6 +38,7 @@
 import os
 import argparse
 import logging
+import prctl
 import tornado.web
 import tornado.ioloop
 import tornado.process
@@ -72,6 +73,8 @@ def standalone():
     parser.add_argument("--background", action="store_true", help="Detach and run server in background")
     args = parser.parse_args()
 
+    prctl.prctl(prctl.NAME, "ellis")
+
     # We don't initialize logging until we fork because we want each child to
     # have its own logging and it's awkward to reconfigure logging that is
     # defined by the parent.
@@ -89,10 +92,15 @@ def standalone():
 
     utils.install_sigusr1_handler(settings.LOG_FILE_PREFIX)
 
-    # Drop a pidfile.
-    pid = os.getpid()
-    with open(settings.PID_FILE, "w") as pidfile:
-        pidfile.write(str(pid) + "\n")
+    # Drop a pidfile. We must keep a reference to the file object here, as this keeps
+    # the file locked and provides extra protection against two processes running at
+    # once.
+    pidfile_lock = None
+    try:
+        pidfile_lock = utils.lock_and_write_pid_file(settings.PID_FILE) # noqa
+    except IOError:
+        # We failed to take the lock - another process is already running
+        exit(1)
 
     # Fork off a child process per core.  In the parent process, the
     # fork_processes call blocks until the children exit.
