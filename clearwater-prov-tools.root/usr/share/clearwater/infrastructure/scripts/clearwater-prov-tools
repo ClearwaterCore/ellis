@@ -36,7 +36,7 @@
 
 . /etc/clearwater/config
 
-if [ -n "$hs_provisioning_hostname" ] && [ -n "$home_domain" ] && [ -n "$xdms_hostname" ] && [ -n "$local_ip" ]
+if [ -n "$hs_provisioning_hostname" ] && [ -n "$home_domain" ] && [ -n "$local_ip" ]
 then
   function escape { echo $1 | sed -e 's/\//\\\//g' ; }
   sed -e 's/^LOCAL_IP = .*$/LOCAL_IP = "'$(escape $local_ip)'"/g' \
