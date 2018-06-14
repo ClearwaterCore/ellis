@@ -52,5 +52,5 @@ setup(
     package_data={
         '': ['*.eml'],
         },
-    install_requires=["tornado"],
+    install_requires=["tornado==2.3"],
     )
